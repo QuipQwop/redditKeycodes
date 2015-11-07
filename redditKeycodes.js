@@ -1,39 +1,4 @@
-//LAST MODIFIED: 6:12PM NOVEMBER 6, 2015
-// ==UserScript==
-// @name         getKeyPressReddit
-// @namespace    http://your.homepage/
-// @version      2.7
-// @description  enter something useful
-// @author       You
-// @match        https://www.reddit.com/*
-// @match        https://www.redditgifts.com/*
-// @grant        none
-// ==/UserScript==
-/***** Changes:
-* 2.7: disabled default action for the 's' key after a '\', for search mode. Before it automatically put an s in the search box. disabling the default action for an event fixes this.
-* 2.6: Added enhanced search functions; press / to enter search mode, then press + or u to pull up an input box to go to a subreddit or user page, respectively, or s to focus on the search box
-*/
-/***** To Fix:
-*    
-*    
-*/
- 
-/***** To Do (potentially)
-*    
-*
-*/
- 
-/***** List of commands:
-* 0-9: first time will 'select' article 0-9 for further action, second time will click the link
-* left and right arrow: go to the previous or next page
-* +: bring up a text field that you can enter a subreddit name into. Press enter to send it.
-* After going back to the subreddit page or selecting, page up and page down will up/downvote the link just clicked.
-* h: go to the home page
-* m: go to reddit.com/user/Quip_Qwop
-* i: go to inbox
-* r: go to /r/random
-* Function keys: If on the home page or a multireddit page, the function keys will grab the appropriate multi
-*/
+
 $(".rank").each(function(){
    $(this).text($(this).text().substring($(this).text().length-1));
    $(this).attr("picked", "false");
@@ -89,6 +54,7 @@ $(document).on("keydown",function(e){
                             $inputbox.val("+");
                         }//end of if($inputbox.val().length===0)
                     });//end of setting $inputbox's on input event listener
+                    $inputbox.css("z-index","100");//set the input box in front of the multireddits tab, if open
                     $("body").append($inputbox);
                     $inputbox.focus();
                 }//end of else if(code==107)
@@ -109,6 +75,7 @@ $(document).on("keydown",function(e){
                             $inputbox.val("+");
                         }//end of if($inputbox.val().length===0)
                     });//end of setting $inputbox's on input event listener
+                    $inputbox.css("z-index","100");//set the input box in front of the multireddits tab, if open
                     $("body").append($inputbox);
                     $inputbox.val("+");
                     $inputbox.focus();
