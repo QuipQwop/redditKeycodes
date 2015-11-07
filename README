@@ -1,0 +1,47 @@
+//LAST MODIFIED: 6:12PM NOVEMBER 6, 2015
+// ==UserScript==
+// @name         getKeyPressReddit
+// @version      2.7
+// @author       Zack Baker
+// @match        https://www.reddit.com/*
+// @match        https://www.redditgifts.com/*
+// @grant        none
+// ==/UserScript==
+/***** Description:
+* This script is used primarily to inject an event listener on a reddit.com/* page to enable specified keyboard shortcuts in lieu of the mouse. The list of commands is detailed below. This script assumes the use of "vanilla" reddit (no extensions, like RES), and 10 articles per page
+*
+*/
+/***** Changes:
+* 2.7: disabled default action for the 's' key after a '\', for search mode. Before it automatically put an s in the search box. disabling the default action for an event fixes this.
+* 2.6: Added enhanced search functions; press / to enter search mode, then press + or u to pull up an input box to go to a subreddit or user page, respectively, or s to focus on the search box
+*/
+/***** To Fix:
+*    
+*    
+*/
+ 
+/***** To Do (potentially)
+* Add commands for navigating comment trees
+* Add support for more than 12 multireddits
+*/
+
+/***** List of commands:
+* 0-9: The first time the number keys are pressed, it "selects" the chosen article, which enables further action:
+	* Pressing that number again will click on the article. Pressing a new number will select a new article
+	* PageUp/PageDown will up/down vote the article, respectively
+	* c will go to the comments for that article
+	* s will save the article
+	* a later update will add more functionality when selecting an article
+* left cursor key: go back 1 page in your history. e.preventDefault is called in this event to prevent Alt+Left Cursor Key to go back two pages. There may be a bug regarding up/down voting and this method; not sure if reddit's servers take a while to register votes, or if going back "erases" the memory of the vote
+* right cursor key: click on the "next >" button, advancing to the next set of articles.
+* /: the forward slash will enable "search mode". after pressing /, pressing:
+	* + will create and focus on a textbox at the bottom of the page. enter a subreddit name here and press enter to go there. The plus sign in the text box is simply there for aestetic purposes. the function ignores it when processing the link.
+	* u will create and focus on a text box at the bottom of the page. enter a user's name here and press enter to go to their profile
+	* s will focus on the page's search box.
+* After returning from a visited link, the commands used for a selected article will work as well. Note selected articles take prescidence, i.e. if you have a last-visited article and a different selected article, pressing c will open the comments for the selected article, not the last visited.
+* h: go to https://www.reddit.com
+* m: go to your profile
+* i: go to your inbox
+* r: go to /r/random
+* Function keys: If on the home page or a multireddit page, pressing the nth function key will take you to the nth multireddit in your multireddits on the left bar. Currently only supports 12 multireddits (for 12 function keys).
+*/
