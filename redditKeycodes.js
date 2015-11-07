@@ -1,3 +1,11 @@
+// ==UserScript==
+// @name         getKeyPressReddit
+// @version      2.7.1
+// @description  see README
+// @author       Zack Baker
+// @match        https://www.reddit.com/*
+// @match        https://www.redditgifts.com/*
+// @grant        none
 
 $(".rank").each(function(){
    $(this).text($(this).text().substring($(this).text().length-1));
