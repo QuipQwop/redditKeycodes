@@ -13,6 +13,7 @@
 *
 */
 /***** Changes:
+* 2.8: enabled more interactivity with selected articles
 * 2.7.1: give search boxes arbitarily high z-indicies, so they are placed on top of the multireddits tab, if open
 * 2.7: disabled default action for the 's' key after a '\', for search mode. Before it automatically put an s in the search box. disabling the default action for an event fixes this.
 * 2.6: Added enhanced search functions; press / to enter search mode, then press + or u to pull up an input box to go to a subreddit or user page, respectively, or s to focus on the search box
@@ -25,6 +26,7 @@
 /***** To Do (potentially)
 * Add commands for navigating comment trees
 * Add support for more than 12 multireddits
+* restructure the code so its not so directly linear (functions, better structuring, etc)
 */
 
 /***** List of commands:
@@ -33,7 +35,7 @@
 	* PageUp/PageDown will up/down vote the article, respectively
 	* c will go to the comments for that article
 	* s will save the article
-	* a later update will add more functionality when selecting an article
+	* r will go to the subreddit the article is from, if on the home page or a multi page
 * left cursor key: go back 1 page in your history. e.preventDefault is called in this event to prevent Alt+Left Cursor Key to go back two pages. There may be a bug regarding up/down voting and this method; not sure if reddit's servers take a while to register votes, or if going back "erases" the memory of the vote
 * right cursor key: click on the "next >" button, advancing to the next set of articles.
 * /: the forward slash will enable "search mode". after pressing /, pressing:
