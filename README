@@ -2,6 +2,7 @@
 // ==UserScript==
 // @name         getKeyPressReddit
 // @version      2.7.1
+// @description  see README
 // @author       Zack Baker
 // @match        https://www.reddit.com/*
 // @match        https://www.redditgifts.com/*

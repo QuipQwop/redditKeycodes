@@ -6,7 +6,7 @@
 // @match        https://www.reddit.com/*
 // @match        https://www.redditgifts.com/*
 // @grant        none
-
+// ==/UserScript==
 $(".rank").each(function(){
    $(this).text($(this).text().substring($(this).text().length-1));
    $(this).attr("picked", "false");
