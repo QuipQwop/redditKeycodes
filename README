@@ -13,7 +13,7 @@
 *
 */
 /***** Changes:
-* 2.7.1: give search boxes arbitarily high z-indicies, so they are placed on top of the multireddits tab, if open (This is untested)
+* 2.7.1: give search boxes arbitarily high z-indicies, so they are placed on top of the multireddits tab, if open
 * 2.7: disabled default action for the 's' key after a '\', for search mode. Before it automatically put an s in the search box. disabling the default action for an event fixes this.
 * 2.6: Added enhanced search functions; press / to enter search mode, then press + or u to pull up an input box to go to a subreddit or user page, respectively, or s to focus on the search box
 */

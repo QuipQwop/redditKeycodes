@@ -50,7 +50,7 @@ $(document).on("keydown",function(e){
                     var $inputbox = $("<input></input>");
                     $inputbox.attr("id","subredditPicker");
                     $inputbox.attr("type","text");
-                    //$inputbox.css("position","fixed");
+                    $inputbox.css("position","relative");
                     $inputbox.css("left",0);
                     $inputbox.on("keydown",function(q){
                         if(q.keyCode==13){
