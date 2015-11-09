@@ -5,6 +5,7 @@
 // @author       Zack Baker
 // @match        https://www.reddit.com/*
 // @match        https://www.redditgifts.com/*
+// @updateURL    https://raw.githubusercontent.com/QuipQwop/redditKeycodes/master/redditKeycodes.js
 // @grant        none
 // ==/UserScript==
 $(".rank").each(function(){
