@@ -93,8 +93,20 @@ $(document).on("keydown",function(e){
                     $("[placeholder='search']")[0].focus();
                 }
             }//end of else if(lastEvent.keyCode==191)
-            else if(code==82){//if the 'r' key is pressed
-                window.location="https://www.reddit.com/r/random";//go to a random subreddit
+            
+            else if(code==82){//if the 'r' key is pressed     
+                if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1){
+                    if($("[picked='true']").length>0)
+                    {
+                        $("[picked='true']").parent().children(".entry").children(".tagline").children(".subreddit")[0].click()
+                    }
+                    else if($(".last-clicked").length>0){
+                        $(".last-clicked").children(".entry").children(".tagline").children(".subreddit")[0].click();
+                    }
+                }
+                else{
+                    window.location="https://www.reddit.com/r/random";//go to a random subreddit
+                }
             }
             else if(code==72){//if the 'h' key is pressed;
                 window.location="https://www.reddit.com";//go home
