@@ -1,13 +1,7 @@
-// ==UserScript==
-// @name         getKeyPressReddit
+// @lastupdated  11:49PM November 8, 2015
 // @version      2.9
 // @description  see README
 // @author       Zack Baker
-// @match        https://www.reddit.com/*
-// @match        https://www.redditgifts.com/*
-// @updateURL    https://raw.githubusercontent.com/QuipQwop/redditKeycodes/master/redditKeycodes.js
-// @grant        none
-// ==/UserScript==
 $(".rank").each(function(){
    $(this).text($(this).text().substring($(this).text().length-1));
    $(this).attr("picked", "false");
