@@ -149,6 +149,9 @@ $(document).on("keydown",function(e){
                 }
             }*/
             else if(code==67){//if the user presses 'c', if an element is picked or a last-visited element exists, go to its comments
+                if(window.location.pathname.indexOf("comments")>-1){
+
+                }
                 if($("[picked='true']").length>0 || $(".last-clicked").length>0){
                     if($("[picked='true']").length>0){//check picked element first
                        $("[picked='true']").parent().children(".entry").children(".flat-list").children(".first").children()[0].click();
