@@ -1,12 +1,7 @@
-//LAST MODIFIED: 11:06PM NOVEMBER 8, 2015
-// ==UserScript==
-// @name         getKeyPressReddit
+//LAST MODIFIED: 12:31AM NOVEMBER 9, 2015
 // @version      2.9
 // @description  see below
 // @author       Zack Baker
-// @match        https://www.reddit.com/*
-// @match        https://www.redditgifts.com/*
-// @grant        none
 // ==/UserScript==
 /***** Description:
 * This script is used primarily to inject an event listener on a reddit.com/* page to enable specified keyboard shortcuts in lieu of the mouse. The list of commands is detailed below. This script assumes the use of "vanilla" reddit (no extensions, like RES), and 10 articles per page for maximum efficiency
