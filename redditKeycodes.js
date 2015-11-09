@@ -95,24 +95,25 @@ $(document).on("keydown",function(e){
             }//end of else if(lastEvent.keyCode==191)
             
             else if(code==82){//if the 'r' key is pressed     
-                if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1){
-                    if($("[picked='true']").length>0)
+                if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1){//if on the home page or on a multireddit page
+                    
+                    if($("[picked='true']").length>0)//if there's a picked element
                     {
-                        $("[picked='true']").parent().children(".entry").children(".tagline").children(".subreddit")[0].click()
+                        $("[picked='true']").parent().children(".entry").children(".tagline").children(".subreddit")[0].click();//go to its subreddit
+                        return;
                     }
-                    else if($(".last-clicked").length>0){
-                        $(".last-clicked").children(".entry").children(".tagline").children(".subreddit")[0].click();
+                    else if($(".last-clicked").length>0){//if there's a last-clicked element
+                        $(".last-clicked").children(".entry").children(".tagline").children(".subreddit")[0].click();//go to its subreddit
+                        return;
                     }
                 }
-                else{
-                    window.location="https://www.reddit.com/r/random";//go to a random subreddit
-                }
+                window.location="https://www.reddit.com/r/random";//go to a random subreddit             
             }
             else if(code==72){//if the 'h' key is pressed;
                 window.location="https://www.reddit.com";//go home
             }
             else if(code==77){//if the 'm' key is pressed;
-                window.location.pathname="/user/" + $(".user").text().split(" ")[0];//go to my profile
+                window.location="http://www.reddit.com/user/" + $(".user").text().split(/\s+/)[0]; //go to the user's profile
             }
             else if(code==73){//if the 'i' key is pressed;
                 window.location.pathname="/message/inbox";
@@ -168,6 +169,34 @@ $(document).on("keydown",function(e){
                         $(".last-clicked").children(".entry").children(".flat-list").children(".save-button").children()[0].click();
                     }
                 }//end of if(pickedElements.length>0 || lastClickedElements>0)
+            }
+            if(window.location.pathname.indexOf("/user/")>-1){//if on the user's profile page, add special commands. MAKE SURE THESE DON'T OVERLAP ANY UNIVERSAL COMMANDS
+                mainUrl = "https://www.reddit.com/user/" + $(".user").text().split(/\s+/)[0];
+                if(code==79){//if the 'o' key is pressed
+                    window.location=mainUrl;//go to the overview
+                }
+                else if(code==67){//if the 'c' key is pressed
+                    window.location= mainUrl + "/comments";
+                }
+                else if(lastEvent.keyCode==83 && code==85){//if the 's' key, then the 'u' key is pressed,
+                    window.location=mainUrl + "/submitted";
+                }
+                else if(code==71){//if the 'g' key is pressed
+                    window.location=mainUrl + "/gilded";
+                }
+                else if(code==85){
+                    window.location=mainUrl + "/upvoted";
+                }
+                else if(code==68){
+                    window.location=mainUrl + "/downvoted";
+                }
+                else if(code==74){//if the 'j' key is pressed (because h is already used for home)
+                    window.location=mainUrl + "/hidden";
+                }
+                else if(lastEvent.keyCode==83 && code==65){//if the 's' key then 'a' key is pressed,
+                    window.location=mainUrl + "/saved";
+                }
+                        
             }
             if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1){//if the page is the homepage or a multireddit page
                 if(code>=112 && code<124){//if a function key is pressed;
