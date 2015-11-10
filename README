@@ -1,5 +1,5 @@
-//LAST MODIFIED: 12:31AM NOVEMBER 9, 2015
-// @version      2.9
+//LAST MODIFIED: 8:53PM NOVEMBER 9, 2015
+// @version      2.10
 // @description  see below
 // @author       Zack Baker
 // ==/UserScript==
@@ -8,6 +8,7 @@
 *
 */
 /***** Changes:
+* 2.10: Added a command to go back to the link in the article on the comments page for that article
 * 2.9: Added commands for the user's profile page. See below in the list of commands
 * 2.8: enabled more interactivity with selected articles
 * 2.7.1: give search boxes arbitarily high z-indicies, so they are placed on top of the multireddits tab, if open
@@ -53,4 +54,5 @@
 	* j: hidden: go to the hidden page. j is used instead of h because h already is used to go to the home page, and this takes precidence.
 	* s u: submitted: go to the submitted page. This works by pushing s, then u
 	* s a: saved: go to the saved page.
+* l: if on the comments page for an article, pressing l will go to the link in the article
 */
