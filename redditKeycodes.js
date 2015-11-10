@@ -13,8 +13,11 @@ $(document).on("keydown",function(e){
         console.log(code);
    
     //if(code-48==0) code=58;
- 
-    if($(":focus").prop("nodeName")=="TEXTAREA" || $(":focus").attr("type")=="text"){
+    console.log($(":focus").prop("tagName"))
+
+    if($(":focus").prop("tagName")=="INPUT" || $(":focus").prop("tagName")=="TEXTAREA"){
+        console.log("is focused on input");
+       // return;
     }
     else{
         try{
