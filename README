@@ -1,5 +1,5 @@
 //LAST MODIFIED: 8:53PM NOVEMBER 9, 2015
-// @version      2.10
+// @version      2.11
 // @description  see below
 // @author       Zack Baker
 // ==/UserScript==
@@ -8,6 +8,7 @@
 *
 */
 /***** Changes:
+* 2.11: Updated input check to better determine if the user is focused on a textbox or not.
 * 2.10: Added a command to go back to the link in the article on the comments page for that article
 * 2.9: Added commands for the user's profile page. See below in the list of commands
 * 2.8: enabled more interactivity with selected articles
