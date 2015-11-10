@@ -165,6 +165,11 @@ $(document).on("keydown",function(e){
                     }
                 }//end of if(pickedElements.length>0 || lastClickedElements>0)
             }
+            if(window.location.pathname.indexOf("/comments/")>-1){//if on the comments page for an article:
+                if(code==76){//if the user presses the 'l' key
+                    $("#siteTable").children(".thing").children(".entry").children(".title").children("a")[0].click()//go to the article
+                }
+            }
             if(window.location.pathname.indexOf("/user/")>-1){//if on the user's profile page, add special commands. MAKE SURE THESE DON'T OVERLAP ANY UNIVERSAL COMMANDS
                 mainUrl = "https://www.reddit.com/user/" + $(".user").text().split(/\s+/)[0];
                 if(code==79){//if the 'o' key is pressed
