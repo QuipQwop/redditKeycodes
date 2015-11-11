@@ -1,7 +1,3 @@
-// @lastupdated  11:49PM November 8, 2015
-// @version      2.9
-// @description  see README
-// @author       Zack Baker
 $(".rank").each(function(){
    $(this).text($(this).text().substring($(this).text().length-1));
    $(this).attr("picked", "false");
@@ -27,10 +23,16 @@ $(document).on("keydown",function(e){
                   $(this).attr("picked","false");
                   $(this).css("color","black");
                   $(this).css("font-weight","normal");
+                  $(this).parent().css("border","");
                 })
                 $(".rank:contains(" + (code-48) + ")").attr("picked","true");
                 $(".rank:contains(" + (code-48) + ")").css("color","red");
                 $(".rank:contains(" + (code-48) + ")").css("font-weight","900");
+                //add a border, on subreddits that don't display the rank number
+                $(".rank:contains(" + (code-48) + ")").parent().css("border-style","solid");
+                $(".rank:contains(" + (code-48) + ")").parent().css("border-width","2px");
+                $(".rank:contains(" + (code-48) + ")").parent().css("border-color","red");
+                $(".rank:contains(" + (code-48) + ")").parent().css("overflow","hidden");
             }//end of if($(".rank:contains(..)..."picked")=="false")
             else{
                 $($($($(".rank:contains("+ (code-48)+ ")")[0]).parent().children()[3]).children()[0]).children()[0].click();//click on text links

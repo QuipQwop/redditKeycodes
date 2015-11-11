@@ -1,5 +1,5 @@
-//LAST MODIFIED: 8:53PM NOVEMBER 9, 2015
-// @version      2.11
+//LAST MODIFIED: 7:13PM NOVEMBER 10, 2015
+// @version      2.12
 // @description  see below
 // @author       Zack Baker
 // ==/UserScript==
@@ -8,6 +8,7 @@
 *
 */
 /***** Changes:
+* 2.12: Added a border for selected elements to distinguish them in subreddits that don't display the rank number
 * 2.11: Updated input check to better determine if the user is focused on a textbox or not.
 * 2.10: Added a command to go back to the link in the article on the comments page for that article
 * 2.9: Added commands for the user's profile page. See below in the list of commands
