@@ -1,30 +1,30 @@
 $(".rank").each(function(){
-   $(this).text($(this).text().substring($(this).text().length-1));
-   $(this).attr("picked", "false");
+    $(this).text($(this).text().substring($(this).text().length-1));
+    $(this).attr("picked", "false");
 });
 lastEvent = new Object();
 lastEvent.keyCode=0;
 $(document).on("keydown",function(e){
-        var code = e.keyCode;
-        console.log(code);
-   
+    var code = e.keyCode;
+    console.log(code);
+
     //if(code-48==0) code=58;
-    console.log($(":focus").prop("tagName"))
+    console.log($(":focus").prop("tagName"));
 
     if($(":focus").prop("tagName")=="INPUT" || $(":focus").prop("tagName")=="TEXTAREA"){
         console.log("is focused on input");
-       // return;
+        // return;
     }
     else{
+        //alert(code-48);
         try{
-            //alert(code-48);
             if($(".rank:contains(" + (code-48) + ")").attr("picked")=="false"){//if the item's picked attribute is false, set it to true. this allows for more manageable interactions with the selected item.
                 $(".rank").each(function(){
-                  $(this).attr("picked","false");
-                  $(this).css("color","black");
-                  $(this).css("font-weight","normal");
-                  $(this).parent().css("border","");
-                })
+                    $(this).attr("picked","false");
+                    $(this).css("color","black");
+                    $(this).css("font-weight","normal");
+                    $(this).parent().css("border","");
+                });
                 $(".rank:contains(" + (code-48) + ")").attr("picked","true");
                 $(".rank:contains(" + (code-48) + ")").css("color","red");
                 $(".rank:contains(" + (code-48) + ")").css("font-weight","900");
@@ -33,21 +33,17 @@ $(document).on("keydown",function(e){
                 $(".rank:contains(" + (code-48) + ")").parent().css("border-width","2px");
                 $(".rank:contains(" + (code-48) + ")").parent().css("border-color","red");
                 $(".rank:contains(" + (code-48) + ")").parent().css("overflow","hidden");
+                //alert("not click");
             }//end of if($(".rank:contains(..)..."picked")=="false")
             else{
-                $($($($(".rank:contains("+ (code-48)+ ")")[0]).parent().children()[3]).children()[0]).children()[0].click();//click on text links
+                $(".rank:contains("+ (code-48)+ ")").parent().children(".entry").children(".title").children("a")[0].click();//click on text links
             }
-        }//end of try
-        catch(err){
-            if(code>=48 && code<59){
-                if($(".rank:contains(" + (code-48) + ")").attr("picked")=="true"){
-                    $($(".rank:contains(" + (code-48) + ")")[0]).parent().children()[3].click();//click on image links //if the element has the picked attribute, go to the link. the if statement in the try statement above should set it, regardless of image or text link
-                }//end of if(".rank:contains...("picked")=="true")
-            }//end of if(code>=48 && code<59)
-            else if(lastEvent.keyCode==191){// if the previous key pressed was /, prepare for specialized input; used for searching
+        }catch(err){
+            if(lastEvent.keyCode==191){// if the previous key pressed was /, prepare for specialized input; used for searching
+                var $inputbox = null;
                 if(code==107){//if the '+' key is pressed
                     //build a textbox that will take you to the inputted subreddit on enter
-                    var $inputbox = $("<input></input>");
+                    $inputbox = $("<input></input>");
                     $inputbox.attr("id","subredditPicker");
                     $inputbox.attr("type","text");
                     $inputbox.css("position","relative");
@@ -68,7 +64,7 @@ $(document).on("keydown",function(e){
                 }//end of else if(code==107)
                 else if(code==85){// if the 'u' key is pressed
                     e.preventDefault();
-                     var $inputbox = $("<input></input>");
+                    $inputbox = $("<input></input>");
                     $inputbox.attr("id","subredditPicker");
                     $inputbox.attr("type","text");
                     $inputbox.css("position","relative");
@@ -92,11 +88,11 @@ $(document).on("keydown",function(e){
                     e.preventDefault();
                     $("[placeholder='search']")[0].focus();
                 }
-            }//end of else if(lastEvent.keyCode==191)
-            
+            }//end of if(lastEvent.keyCode==191)
+
             else if(code==82){//if the 'r' key is pressed     
                 if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1){//if on the home page or on a multireddit page
-                    
+
                     if($("[picked='true']").length>0)//if there's a picked element
                     {
                         $("[picked='true']").parent().children(".entry").children(".tagline").children(".subreddit")[0].click();//go to its subreddit
@@ -108,7 +104,7 @@ $(document).on("keydown",function(e){
                     }
                 }
                 window.location="https://www.reddit.com/r/random";//go to a random subreddit             
-            }
+            }//end of if(code==82)
             else if(code==72){//if the 'h' key is pressed;
                 window.location="https://www.reddit.com";//go home
             }
@@ -126,7 +122,6 @@ $(document).on("keydown",function(e){
                 e.preventDefault();
                 window.history.back();
             }
-           
             else if(code==33 || code==34){//pageup/pagedown for up/downvoting
                 if($(".last-clicked").length>0 || $("[picked='true']").length>0){
                     e.preventDefault();
@@ -135,17 +130,17 @@ $(document).on("keydown",function(e){
                     }
                     else if(code==34 && $("[picked='true']").length>0){
                         $("[picked='true']").parent().children(".midcol").children("[aria-label='downvote']").click();//navigate from the rank span to the downvote arrow and click it
-                       
+
                     }//end of else if(code==34 && $("[picked='true']").length>0)
                     else if(code==33 && $(".last-clicked").length>0){
-                        $(".last-clicked").children(".midcol").children("[aria-label='upvote']").click()//navigate from the parent div to the upvote arrow and click it
+                        $(".last-clicked").children(".midcol").children("[aria-label='upvote']").click();//navigate from the parent div to the upvote arrow and click it
                     }
                     else if(code==34 && $(".last-clicked").length>0){
                         $(".last-clicked").children(".midcol").children("[aria-label='downvote']").click();//navigate from the parent div to the downvote arrow and click it
                     }
                 }//end of if($(".last-clicked").length>0 || $("[picked='true']").length>0)
             }//end of else if(code==33 || code==34)
-           /* else if(code==67){
+            /* else if(code==67){
                 if($(".last-clicked").length>0){
                   //  $(".last-clicked").children(".entry").children(".flat-list").children(".first").children("a")[0].click()
                 }
@@ -153,17 +148,17 @@ $(document).on("keydown",function(e){
             else if(code==67){//if the user presses 'c', if an element is picked or a last-visited element exists, go to its comments
                 if($("[picked='true']").length>0 || $(".last-clicked").length>0){
                     if($("[picked='true']").length>0){//check picked element first
-                       $("[picked='true']").parent().children(".entry").children(".flat-list").children(".first").children()[0].click();
+                        $("[picked='true']").parent().children(".entry").children(".flat-list").children(".first").children()[0].click();
                     }
                     else{//then check last-clicked
-                        $(".last-clicked").children(".entry").children(".flat-list").children(".first").children()[0].click()
+                        $(".last-clicked").children(".entry").children(".flat-list").children(".first").children()[0].click();
                     }
                 }//end of if(pickedElements.length>0 || lastClickedElements>0)
             }//end of if(code==67)
             else if(code==83){// if the 's' key is pressed
                 if($("[picked='true']").length>0 || $(".last-clicked").length>0){
                     if($("[picked='true']").length>0){//check picked element first
-                       $("[picked='true']").parent().children(".entry").children(".flat-list").children(".save-button").children()[0].click();//click the save link associated with the element
+                        $("[picked='true']").parent().children(".entry").children(".flat-list").children(".save-button").children()[0].click();//click the save link associated with the element
                     }
                     else{//then check last-clicked
                         $(".last-clicked").children(".entry").children(".flat-list").children(".save-button").children()[0].click();
@@ -172,7 +167,7 @@ $(document).on("keydown",function(e){
             }
             if(window.location.pathname.indexOf("/comments/")>-1){//if on the comments page for an article:
                 if(code==76){//if the user presses the 'l' key
-                    $("#siteTable").children(".thing").children(".entry").children(".title").children("a")[0].click()//go to the article
+                    $("#siteTable").children(".thing").children(".entry").children(".title").children("a")[0].click();//go to the article
                 }
             }
             if(window.location.pathname.indexOf("/user/")>-1){//if on the user's profile page, add special commands. MAKE SURE THESE DON'T OVERLAP ANY UNIVERSAL COMMANDS
@@ -201,18 +196,17 @@ $(document).on("keydown",function(e){
                 else if(lastEvent.keyCode==83 && code==65){//if the 's' key then 'a' key is pressed,
                     window.location=mainUrl + "/saved";
                 }
-                        
+
             }
             if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1){//if the page is the homepage or a multireddit page
                 if(code>=112 && code<124){//if a function key is pressed;
                     e.preventDefault();
-                    $($(".multis").children()[(code-112)]).children()[0].click()//go to that multi
+                    $($(".multis").children()[(code-112)]).children()[0].click();//go to that multi
                     //console.log($($(".multis").children()[(code-111)]).children()[0].text())
- 
+
                 }//end of if(code>=112 && code<124
-            }//end of if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1)
-       
+            }//end of if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1
         }//end of catch(err)
     }//end of else
     lastEvent = e;
-})//end of  adding keydown event listener to the document
+});//end of  adding keydown event listener to the document
