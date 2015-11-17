@@ -1,5 +1,5 @@
 //LAST MODIFIED: 7:13PM NOVEMBER 10, 2015
-// @version      3.0
+// @version      3.1
 // @description  see below
 // @author       Zack Baker
 // ==/UserScript==
@@ -8,6 +8,7 @@
 *
 */
 /***** Changes:
+* 3.1: Changed the method of selecting the "next page" link to be more robust
 * 3.0: Consolidated clicking text and image links into one statement, as well as making it more jQuery friendly. This update doesn't add or update any visible features, but restructures the code enough to warrant an update
 * 2.12: Added a border for selected elements to distinguish them in subreddits that don't display the rank number
 * 2.11: Updated input check to better determine if the user is focused on a textbox or not.

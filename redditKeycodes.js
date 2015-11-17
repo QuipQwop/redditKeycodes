@@ -116,7 +116,7 @@ $(document).on("keydown",function(e){
             }
             else if(code==39){//if the right arrow is pressed
                 e.preventDefault();
-                $(":contains('next ›')")[7].click();
+                $("[rel='nofollow next']")[0].click();
             }
             else if(code==37){//if the left arrow is pressed
                 e.preventDefault();
