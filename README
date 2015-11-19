@@ -25,7 +25,7 @@
 */
  
 /***** To Do (potentially)
-* Add commands for navigating comment trees
+* Add commands for navigating comment trees. ($(".comment") grabs a div for each individual class. While rudimentary, this is a start for comment support)
 * Add support for more than 12 multireddits
 * restructure the code so its not so directly linear (functions, better structuring, etc)
 */
