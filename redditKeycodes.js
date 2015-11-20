@@ -65,13 +65,13 @@ $(document).on("keydown",function(e){
                 else if(code==85){// if the 'u' key is pressed
                     e.preventDefault();
                     $inputbox = $("<input></input>");
-                    $inputbox.attr("id","subredditPicker");
+                    $inputbox.attr("id","userPicker");
                     $inputbox.attr("type","text");
                     $inputbox.css("position","relative");
                     $inputbox.css("left",0);
                     $inputbox.on("keydown",function(q){
                         if(q.keyCode==13){
-                            window.location=" https://www.reddit.com/user/"+$("#subredditPicker").val().substring(1);
+                            window.location=" https://www.reddit.com/user/"+$("#userPicker").val().substring(1);
                         }//end of if(q.keyCode==13)
                     });//end of $inputbox's on keydown event handler
                     $inputbox.on("input",function(){
@@ -88,6 +88,30 @@ $(document).on("keydown",function(e){
                     e.preventDefault();
                     $("[placeholder='search']")[0].focus();
                 }
+                else if(code==67 && window.location.pathname.indexOf("comments")>-1){//if the 'c' key is pressed
+                    e.preventDefault();
+                    $inputbox = $("<input></input>");
+                    $inputbox.attr("id","commentSelector");
+                    $inputbox.attr("type","text");
+                    $inputbox.css("position","relative");
+                    $inputbox.val("+");
+                    $inputbox.css("left",0);
+                    $inputbox.on("input",function(){if($inputbox.val().length===0){
+                        $inputbox.val("+");
+                    }});
+                    $inputbox.on("keydown",function(q){
+                        if(q.keyCode==13){//if the enter key is pressed
+                            var commentNum = parseInt($inputbox.val().substring(1));//get the contents of the div
+                            console.log("Comment Num: " + commentNum);
+                            window.scrollTo(0,$($(".comment")[commentNum-1]).offset().top);//scroll to the x-coordinate of the selected comment
+                            $inputbox.val("+");
+                        }
+                    });
+                    $inputbox.css("z-index","100");
+                    $("body").append($inputbox);
+                    $inputbox.focus();
+                }
+                
             }//end of if(lastEvent.keyCode==191)
 
             else if(code==82){//if the 'r' key is pressed     
@@ -116,7 +140,7 @@ $(document).on("keydown",function(e){
             }
             else if(code==39){//if the right arrow is pressed
                 e.preventDefault();
-                $("[rel='nofollow next']")[0].click();
+                $(":contains('next ›')")[7].click();
             }
             else if(code==37){//if the left arrow is pressed
                 e.preventDefault();
