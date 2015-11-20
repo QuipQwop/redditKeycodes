@@ -8,6 +8,7 @@
 *
 */
 /***** Changes:
+* 3.99: Added up/downvoting for selected comments
 * 3.9: Added rudimentary commenting commands
 * 3.1: Changed the method of selecting the "next page" link to be more robust
 * 3.0: Consolidated clicking text and image links into one statement, as well as making it more jQuery friendly. This update doesn't add or update any visible features, but restructures the code enough to warrant an update
@@ -44,7 +45,7 @@
 	* + will create and focus on a textbox at the bottom of the page. enter a subreddit name here and press enter to go there. The plus sign in the text box is simply there for aestetic purposes. the function ignores it when processing the link.
 	* u will create and focus on a text box at the bottom of the page. enter a user's name here and press enter to go to their profile
 	* s will focus on the page's search box.
-	* c, on a comments page, will create and focus on a text box at the bottom of the page. Entering a number here and pressing enter will scroll the page so that comment is visible at the top of the screen. 
+	* c, on a comments page, will create and focus on a text box at the bottom of the page. Entering a number here and pressing enter will scroll the page so that comment is visible at the top of the screen. This will also 'save' the selected comment for further commands, much like selecting articles
 * After returning from a visited link, the commands used for a selected article will work as well. Note selected articles take prescidence, i.e. if you have a last-visited article and a different selected article, pressing c will open the comments for the selected article, not the last visited.
 * h: go to https://www.reddit.com
 * m: go to your profile
@@ -61,4 +62,32 @@
 	* s u: submitted: go to the submitted page. This works by pushing s, then u
 	* s a: saved: go to the saved page.
 * l: if on the comments page for an article, pressing l will go to the link in the article
+*/
+
+
+/***** Comment Trees
+* In regards to lines 216-229, the navigation of the comment tree up the parents, the current code only works for 'linear' trees. e.g.:
+	Root Comment:
+	|
+	-	Child Comment:
+		|
+		-	Grandchild Comment:
+			| 
+			-	GreatGrandchild Comment:
+				|
+				...
+etc.
+However, this is not the only tree structure. For example:
+	Root Comment:
+	|
+	-	Child Comment 1:
+		|
+		-
+			Grandchild Comment:
+		Child Comment 2: 
+		|
+		-	Grandchild Comment:
+		...
+
+etc. This throws off what comment is selected, though it shows the proper parent comment. USE ID of the anchor to navigate properly!!
 */

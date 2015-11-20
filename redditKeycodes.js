@@ -2,6 +2,29 @@ $(".rank").each(function(){
     $(this).text($(this).text().substring($(this).text().length-1));
     $(this).attr("picked", "false");
 });
+$rootComments=[]
+$(".comment").each(function(){
+    $(this).attr("selectedComment","false");
+    var $currentButtonClass = $($(this).children(".entry").children(".flat-list").children()[2]).attr("class");
+    if($currentButtonClass!==undefined){//if the third button in the flat-list bar has a class, it is a root comment, so add it to the root comments array (the li element that contains the 'parent' link does not have a class, which is the third element in non-root comments)
+        $rootComments.push($(this));
+    }
+});
+
+/**
+* This method loops through all elements in $rootComments and compares their DOM node with the passed in DOM node.
+* @param ele a DOM node
+* @return true if ele matches a DOM node in $rootComment, false otherwise
+*/
+function checkInRootComments(ele){
+    for(i=0;i<$rootComments.length;i++){
+        if($rootComments[i][0]==ele){
+            return true;
+        }
+    }
+    return false;
+}
+var commentSelected = -1;
 lastEvent = new Object();
 lastEvent.keyCode=0;
 $(document).on("keydown",function(e){
@@ -90,26 +113,38 @@ $(document).on("keydown",function(e){
                 }
                 else if(code==67 && window.location.pathname.indexOf("comments")>-1){//if the 'c' key is pressed
                     e.preventDefault();
-                    $inputbox = $("<input></input>");
-                    $inputbox.attr("id","commentSelector");
-                    $inputbox.attr("type","text");
-                    $inputbox.css("position","relative");
-                    $inputbox.val("+");
-                    $inputbox.css("left",0);
-                    $inputbox.on("input",function(){if($inputbox.val().length===0){
+                    if($("#commentSelector").length<1){//if the commentSelector div doesn't exist yet
+                        //create it
+                        $inputbox = $("<input></input>");
+                        $inputbox.attr("id","commentSelector");
+                        $inputbox.attr("type","text");
+                        $inputbox.css("position","relative");
                         $inputbox.val("+");
-                    }});
-                    $inputbox.on("keydown",function(q){
-                        if(q.keyCode==13){//if the enter key is pressed
-                            var commentNum = parseInt($inputbox.val().substring(1));//get the contents of the div
-                            console.log("Comment Num: " + commentNum);
-                            window.scrollTo(0,$($(".comment")[commentNum-1]).offset().top);//scroll to the x-coordinate of the selected comment
+                        $inputbox.css("left",0);
+                        $inputbox.on("input",function(){if($inputbox.val().length===0){
                             $inputbox.val("+");
-                        }
-                    });
-                    $inputbox.css("z-index","100");
-                    $("body").append($inputbox);
-                    $inputbox.focus();
+                        }});
+                        $inputbox.on("keydown",function(q){
+                            if(q.keyCode==13){//if the enter key is pressed
+                                for(i=0;i<$(".comment").length;i++){
+                                    $($(".comment")[i]).attr("selectedComment","false");
+                                }
+                                var commentNum = parseInt($inputbox.val().substring(1));//get the contents of the div
+                                commentSelected = commentNum-1;
+                                console.log("Comment Num: " + commentNum);
+                                window.scrollTo(0,$($(".comment")[commentNum-1]).offset().top);//scroll to the x-coordinate of the selected comment
+                                $($(".comment")[commentNum-1]).attr("selectedComment","true");
+                                $inputbox.val("+");
+                                $inputbox.blur();
+                            }
+                        });
+                        $inputbox.css("z-index","100");
+                        $("body").append($inputbox);
+                        $inputbox.focus();
+                    }//end of if($("#commentSelector").length<1)
+                    else{//otherwise just focus on it
+                        $("#commentSelector").focus();
+                    }
                 }
                 
             }//end of if(lastEvent.keyCode==191)
@@ -163,12 +198,35 @@ $(document).on("keydown",function(e){
                         $(".last-clicked").children(".midcol").children("[aria-label='downvote']").click();//navigate from the parent div to the downvote arrow and click it
                     }
                 }//end of if($(".last-clicked").length>0 || $("[picked='true']").length>0)
+                else if($("[selectedComment='true']").length>0){//if a 'selected comment' exists
+                    e.preventDefault();
+                    if(code==33){
+                        $("[selectedcomment='true']").children(".midcol").children("[data-event-action='upvote']").click()
+                    }
+                    else if(code==34){
+                        $("[selectedcomment='true']").children(".midcol").children("[data-event-action='downvote']").click()
+                    }
+                }
             }//end of else if(code==33 || code==34)
             /* else if(code==67){
                 if($(".last-clicked").length>0){
                   //  $(".last-clicked").children(".entry").children(".flat-list").children(".first").children("a")[0].click()
                 }
             }*/
+            else if(code==80){//if the 'p' key is pressed
+                ///This code works, but only properly for linear trees, see README for more information
+                /*if($("[selectedcomment='true']").length>0){//if a selected comment exists
+                    $selComment = $("[selectedcomment='true']")
+                    if(!checkInRootComments($selComment[0])){//if the selected comment is NOT a root comment
+                        $($selComment.children(".entry").children(".flat-list").children()[2]).children()[0].click();//click on the parent link
+                        $selComment.attr("selectedcomment","false");//de-select the child comment
+                        commentSelected--;
+                        $($(".comment")[commentSelected]).attr("selectedcomment","true");//select the parent comment
+                    }else{
+                        console.log("rootComment");
+                    }
+                }*/
+            }
             else if(code==67){//if the user presses 'c', if an element is picked or a last-visited element exists, go to its comments
                 if($("[picked='true']").length>0 || $(".last-clicked").length>0){
                     if($("[picked='true']").length>0){//check picked element first
