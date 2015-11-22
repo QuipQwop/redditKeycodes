@@ -1,5 +1,5 @@
-//LAST MODIFIED: 1:18AM NOVEMBER 20, 2015
-// @version      3.9
+//LAST MODIFIED: 11:05AM NOVEMBER 20, 2015
+// @version      3.99.5
 // @description  see below
 // @author       Zack Baker
 // ==/UserScript==
@@ -8,6 +8,7 @@
 *
 */
 /***** Changes:
+* 3.99.5: Added domain searching in search mode
 * 3.99: Added up/downvoting for selected comments
 * 3.9: Added rudimentary commenting commands
 * 3.1: Changed the method of selecting the "next page" link to be more robust
@@ -46,6 +47,7 @@
 	* u will create and focus on a text box at the bottom of the page. enter a user's name here and press enter to go to their profile
 	* s will focus on the page's search box.
 	* c, on a comments page, will create and focus on a text box at the bottom of the page. Entering a number here and pressing enter will scroll the page so that comment is visible at the top of the screen. This will also 'save' the selected comment for further commands, much like selecting articles
+	* d will create and focus on a textbox at the bottom of the page. Entering a url and pressing enter will return articles from that domain
 * After returning from a visited link, the commands used for a selected article will work as well. Note selected articles take prescidence, i.e. if you have a last-visited article and a different selected article, pressing c will open the comments for the selected article, not the last visited.
 * h: go to https://www.reddit.com
 * m: go to your profile

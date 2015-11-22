@@ -31,7 +31,6 @@ $(document).on("keydown",function(e){
     var code = e.keyCode;
     console.log(code);
 
-    //if(code-48==0) code=58;
     console.log($(":focus").prop("tagName"));
 
     if($(":focus").prop("tagName")=="INPUT" || $(":focus").prop("tagName")=="TEXTAREA"){
@@ -111,7 +110,7 @@ $(document).on("keydown",function(e){
                     e.preventDefault();
                     $("[placeholder='search']")[0].focus();
                 }
-                else if(code==67 && window.location.pathname.indexOf("comments")>-1){//if the 'c' key is pressed
+                else if(code==67 && window.location.pathname.indexOf("comments")>-1){//if the 'c' key is pressed on a comments page
                     e.preventDefault();
                     if($("#commentSelector").length<1){//if the commentSelector div doesn't exist yet
                         //create it
@@ -145,6 +144,26 @@ $(document).on("keydown",function(e){
                     else{//otherwise just focus on it
                         $("#commentSelector").focus();
                     }
+                }
+                else if(code==68){//if the 'd' key is pressed
+                    e.preventDefault();
+                    $inputbox = $("<input></input>");
+                    $inputbox.attr("id","domainSelector");
+                    $inputbox.attr("type","text");
+                    $inputbox.css("position","relative");
+                    $inputbox.val("+");
+                    $inputbox.css("left",0);
+                    $inputbox.on("input",function(){if($inputbox.val().length===0){
+                        $inputbox.val("+");
+                    }});
+                    $inputbox.on("keydown",function(q){
+                        if(q.keyCode==13){
+                            window.location="https://www.reddit.com/domain/" + $("#domainSelector").val().substring(1);
+                        }
+                    });
+                    $inputbox.css("z-index","100");
+                    $("body").append($inputbox);
+                    $inputbox.focus();
                 }
                 
             }//end of if(lastEvent.keyCode==191)
