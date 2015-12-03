@@ -5,8 +5,10 @@ $(".rank").each(function(){
 $rootComments=[]
 $(".comment").each(function(){
     $(this).attr("selectedComment","false");
-    var $currentButtonClass = $($(this).children(".entry").children(".flat-list").children()[2]).attr("class");
-    if($currentButtonClass!==undefined){//if the third button in the flat-list bar has a class, it is a root comment, so add it to the root comments array (the li element that contains the 'parent' link does not have a class, which is the third element in non-root comments)
+    //this method doesn't work, because comments whose parent has been deleted will also satisfy this condition
+    /*var $currentButtonClass = $($(this).children(".entry").children(".flat-list").children()[2]).attr("class");
+    if($currentButtonClass!==undefined){//if the third button in the flat-list bar has a class, it is a root comment, so add it to the root comments array (the li element that contains the 'parent' link does not have a class, which is the third element in non-root comments)*/ 
+    if($(this).offset().left<=20 && $(this).offset().left>0){//this isn't perfect either, but it should be all-or-nothing; either /r works for searching, or it doesn't. Pinpointing the 'definition' of a root comment is difficult, and the position test doesn't always work because each subreddit positions their comments differently
         $rootComments.push($(this));
     }
 });
@@ -143,6 +145,42 @@ $(document).on("keydown",function(e){
                     }//end of if($("#commentSelector").length<1)
                     else{//otherwise just focus on it
                         $("#commentSelector").focus();
+                    }
+                }
+                else if(code==82 && window.location.pathname.indexOf("comments")>-1){// if on a comments page and the 'r' key is pressed
+                    e.preventDefault();
+                    if($("#rootSelector").length<1){//if the rootSelector div doesn't exist yet
+                        //create it
+                        $inputbox = $("<input></input>");
+                        $inputbox.attr("id","rootSelector");
+                        $inputbox.attr("type","text");
+                        $inputbox.css("position","relative");
+                        $inputbox.val("+");
+                        $inputbox.css("left",0);
+                        $inputbox.on("input",function(){if($inputbox.val().length===0){
+                            $inputbox.val("+");
+                        }});
+                        $inputbox.on("keydown",function(q){
+                            if(q.keyCode==13){//if the enter key is pressed
+                                for(i=0;i<$(".comment").length;i++){
+                                    $($(".comment")[i]).attr("selectedComment","false");
+                                }
+                                var commentNum = parseInt($inputbox.val().substring(1));//get the contents of the div
+                                commentSelected = commentNum-1;
+                                console.log("Root Comment Num: " + commentNum);
+                                //window.scrollTo(0,$($(".comment")[commentNum-1]).offset().top);//scroll to the x-coordinate of the selected comment
+                                window.scrollTo(0,$rootComments[commentSelected].offset().top);//scroll to the x-coordinate of the selected comment
+                                $rootComments[commentSelected].attr("selectedComment","true");
+                                $inputbox.val("+");
+                                $inputbox.blur();
+                            }
+                        });
+                        $inputbox.css("z-index","100");
+                        $("body").append($inputbox);
+                        $inputbox.focus();
+                    }//end of if($("#commentSelector").length<1)
+                    else{//otherwise just focus on it
+                        $("#rootSelector").focus();
                     }
                 }
                 else if(code==68){//if the 'd' key is pressed
@@ -298,6 +336,9 @@ $(document).on("keydown",function(e){
                     window.location=mainUrl + "/saved";
                 }
 
+            }
+            if($("[selectedcomment='true']").length>0 && code==65){//if a comment is selected and the 'a' key is pressed,
+             //   $("[selectedcomment='true']").children(".entry").children(".usertext").children(".usertext-body").children().children().children()[0].click(); //click the link in the comment. Coming soon
             }
             if(window.location.pathname=="/" || window.location.pathname.indexOf("/m/")>-1){//if the page is the homepage or a multireddit page
                 if(code>=112 && code<124){//if a function key is pressed;
