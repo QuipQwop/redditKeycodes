@@ -8,7 +8,7 @@
 *
 */
 /***** Changes:
-* 4.0: Version 4.0 is here!! Added a method for scrolling between root comments
+* 4.0: Version 4.0 is here!! Added a method for scrolling between root comments and created a better way of determining which comments are root comments.
 * 3.999: Added a root comment search mode. The method for selecting root comment is not yet perfect, and root searching may not work on certain subreddits, based on the current test. This build may be buggy.
 * 3.99.5: Added domain searching in search mode
 * 3.99: Added up/downvoting for selected comments
