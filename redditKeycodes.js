@@ -2,13 +2,18 @@ $(".rank").each(function(){
     $(this).text($(this).text().substring($(this).text().length-1));
     $(this).attr("picked", "false");
 });
+lastRootIndex = 0;
 $rootComments=[]
+$firstRoot = $($(".comment")[0]);
 $(".comment").each(function(){
     $(this).attr("selectedComment","false");
     //this method doesn't work, because comments whose parent has been deleted will also satisfy this condition
     /*var $currentButtonClass = $($(this).children(".entry").children(".flat-list").children()[2]).attr("class");
     if($currentButtonClass!==undefined){//if the third button in the flat-list bar has a class, it is a root comment, so add it to the root comments array (the li element that contains the 'parent' link does not have a class, which is the third element in non-root comments)*/ 
-    if($(this).offset().left<=20 && $(this).offset().left>0){//this isn't perfect either, but it should be all-or-nothing; either /r works for searching, or it doesn't. Pinpointing the 'definition' of a root comment is difficult, and the position test doesn't always work because each subreddit positions their comments differently
+    /*if($(this).offset().left<=20 && $(this).offset().left>0){//this isn't perfect either, but it should be all-or-nothing; either /r works for searching, or it doesn't. Pinpointing the 'definition' of a root comment is difficult, and the position test doesn't always work because each subreddit positions their comments differently
+        $rootComments.push($(this));
+    }*/
+    if($(this).offset().left==$firstRoot.offset().left){
         $rootComments.push($(this));
     }
 });
@@ -169,6 +174,7 @@ $(document).on("keydown",function(e){
                                 commentSelected = commentNum-1;
                                 console.log("Root Comment Num: " + commentNum);
                                 //window.scrollTo(0,$($(".comment")[commentNum-1]).offset().top);//scroll to the x-coordinate of the selected comment
+                                lastRootIndex = commentSelected;
                                 window.scrollTo(0,$rootComments[commentSelected].offset().top);//scroll to the x-coordinate of the selected comment
                                 $rootComments[commentSelected].attr("selectedComment","true");
                                 $inputbox.val("+");
@@ -303,6 +309,84 @@ $(document).on("keydown",function(e){
                         $(".last-clicked").children(".entry").children(".flat-list").children(".save-button").children()[0].click();
                     }
                 }//end of if(pickedElements.length>0 || lastClickedElements>0)
+            }
+            if(code==83 && window.location.pathname.indexOf("/comments/")>-1){//if the user presses the 's' key on a comments page
+                if($("[selectedcomment=true]").length>0){//if a selected comment exists
+                    len = $rootComments.length-1;
+                    if(lastRootIndex+1>len){//if its the last selected comment
+                        $lastEle = $rootComments[$rootComments.length-1];//get the last root comment
+                        window.scrollTo(0,$lastEle.offset().top);//scroll to it
+                        $(".comment").each(function(){
+                            $(this).attr("selectedcomment","false");
+                        });
+                         $("[name='commentStar']").each(function(){
+                            $(this).remove();
+                        });
+                        $lastEle.attr("selectedcomment","true");//make it the selected comment
+                        $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")                        
+                        $lastEle.focus();//focus on it
+                    }
+                    else{
+                        lastRootIndex++;
+                        $selComment = $rootComments[lastRootIndex];
+                        $(".comment").each(function(){
+                            $(this).attr("selectedcomment","false");
+                        });
+                        $("[name='commentStar']").each(function(){
+                            $(this).remove();
+                        });
+                        $selComment.attr("selectedcomment","true");
+                        $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")
+                        window.scrollTo(0,$selComment.offset().top);
+                        $selComment.focus();
+                    }
+                }
+                else{//if there is no selected comment
+                    lastRootIndex=0;
+                    $rootComments[0].attr("selectedcomment","true");
+                    $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")                    
+                    window.scrollTo(0,$rootComments[0].offset().top);
+                    $rootComments[0].focus();
+                }
+            }
+            if(code==87 && window.location.pathname.indexOf("/comments/")>-1){//if the user presses the 'w' key on a comments page
+                if($("[selectedcomment=true]").length>0){//if a selected comment exists
+                    if(lastRootIndex-1<0){//if its the first selected comment
+                        lastRootIndex=0;
+                        $lastEle = $rootComments[0];//get the first root comment
+                        window.scrollTo(0,$lastEle.offset().top);//scroll to it
+                        $(".comment").each(function(){
+                            $(this).attr("selectedcomment","false");
+                        });
+                        $("[name='commentStar']").each(function(){
+                            $(this).remove();
+                        });
+                        $lastEle.attr("selectedcomment","true");//make it the selected comment
+                        $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")
+                        $lastEle.focus();//focus on it
+                    }
+                    else{
+                        lastRootIndex--;
+                        $selComment = $rootComments[lastRootIndex];
+                        $(".comment").each(function(){
+                            $(this).attr("selectedcomment","false");
+                        });
+                         $("[name='commentStar']").each(function(){
+                            $(this).remove();
+                        });
+                        $selComment.attr("selectedcomment","true");
+                        $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")                       
+                        window.scrollTo(0,$selComment.offset().top);
+                        $selComment.focus();
+                    }
+                }
+                else{//if there is no selected comment, go to the first root comment
+                    lastRootIndex=0;
+                    $rootComments[0].attr("selectedcomment","true");
+                    $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")                                           
+                    window.scrollTo(0,$rootComments[0].offset().top);
+                    $rootComments[0].focus();
+                }
             }
             if(window.location.pathname.indexOf("/comments/")>-1){//if on the comments page for an article:
                 if(code==76){//if the user presses the 'l' key
