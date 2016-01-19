@@ -1,5 +1,5 @@
-//LAST MODIFIED: 1:53AM DECEMBER 17, 2015
-// @version      4.0
+//LAST MODIFIED: 1:28AM DECEMBER 17, 2015
+// @version      4.1
 // @description  see below
 // @author       Zack Baker
 // ==/UserScript==
@@ -8,6 +8,7 @@
 *
 */
 /***** Changes:
+* 4.1: Added numbering to root comments, for easy navigation after returning to the comments (for use with /r)
 * 4.0: Version 4.0 is here!! Added a method for scrolling between root comments and created a better way of determining which comments are root comments.
 * 3.999: Added a root comment search mode. The method for selecting root comment is not yet perfect, and root searching may not work on certain subreddits, based on the current test. This build may be buggy.
 * 3.99.5: Added domain searching in search mode

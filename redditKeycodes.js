@@ -1,3 +1,4 @@
+
 $(".rank").each(function(){
     $(this).text($(this).text().substring($(this).text().length-1));
     $(this).attr("picked", "false");
@@ -30,6 +31,11 @@ function checkInRootComments(ele){
         }
     }
     return false;
+}
+for(i=0;i<$rootComments.length;i++){//this loop numbers root comments, for easy navigation after leaving the page
+   if(window.location.pathname.indexOf("comments")>-1){
+       $rootComments[i].children(".entry").children(".tagline").append("<span style='color:red'>"+(i+1)+"</span>")
+   }
 }
 var commentSelected = -1;
 lastEvent = new Object();
@@ -177,6 +183,7 @@ $(document).on("keydown",function(e){
                                 lastRootIndex = commentSelected;
                                 window.scrollTo(0,$rootComments[commentSelected].offset().top);//scroll to the x-coordinate of the selected comment
                                 $rootComments[commentSelected].attr("selectedComment","true");
+                                $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")
                                 $inputbox.val("+");
                                 $inputbox.blur();
                             }
@@ -324,6 +331,7 @@ $(document).on("keydown",function(e){
                         });
                         $lastEle.attr("selectedcomment","true");//make it the selected comment
                         $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")                        
+                        //$("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().prepend("<span name='rootCommentIndex' style='color:#FF0000'>" + lastRootIndex+". </span>")
                         $lastEle.focus();//focus on it
                     }
                     else{
@@ -337,6 +345,7 @@ $(document).on("keydown",function(e){
                         });
                         $selComment.attr("selectedcomment","true");
                         $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")
+                        // $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().prepend("<span name='rootCommentIndex' style='color:#FF0000'>" + lastRootIndex+". </span>")
                         window.scrollTo(0,$selComment.offset().top);
                         $selComment.focus();
                     }
@@ -344,7 +353,8 @@ $(document).on("keydown",function(e){
                 else{//if there is no selected comment
                     lastRootIndex=0;
                     $rootComments[0].attr("selectedcomment","true");
-                    $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")                    
+                    $("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().append("<span name='commentStar' style='color:#FF0000'> *</span>")
+                    //$("[selectedcomment='true']").children(".entry").children("form").children("div").children("div").children().prepend("<span name='rootCommentIndex' style='color:#FF0000'>" + lastRootIndex+". </span>")
                     window.scrollTo(0,$rootComments[0].offset().top);
                     $rootComments[0].focus();
                 }
