@@ -1,13 +1,8 @@
-//LAST MODIFIED: 1:28AM DECEMBER 17, 2015
-// @version      4.1
-// @description  see below
-// @author       Zack Baker
-// ==/UserScript==
-/***** Description:
-* This script is used primarily to inject an event listener on a reddit.com/* page to enable specified keyboard shortcuts in lieu of the mouse. The list of commands is detailed below. This script assumes the use of "vanilla" reddit (no extensions, like RES), jQuery (which should be enabled normally on reddit), and 10 articles per page for maximum efficiency
-*
-*/
-/***** Changes:
+
+# Description:
+ This script is used primarily to inject an event listener on a reddit.com/* page to enable specified keyboard shortcuts in lieu of the mouse. The list of commands is detailed below. This script assumes the use of "vanilla" reddit (no extensions, like RES), jQuery (which should be enabled normally on reddit), and 10 articles per page for maximum efficiency
+
+# Changes:
 * 4.1: Added numbering to root comments, for easy navigation after returning to the comments (for use with /r)
 * 4.0: Version 4.0 is here!! Added a method for scrolling between root comments and created a better way of determining which comments are root comments.
 * 3.999: Added a root comment search mode. The method for selecting root comment is not yet perfect, and root searching may not work on certain subreddits, based on the current test. This build may be buggy.
@@ -24,19 +19,18 @@
 * 2.7.1: give search boxes arbitarily high z-indicies, so they are placed on top of the multireddits tab, if open
 * 2.7: disabled default action for the 's' key after a '\', for search mode. Before it automatically put an s in the search box. disabling the default action for an event fixes this.
 * 2.6: Added enhanced search functions; press / to enter search mode, then press + or u to pull up an input box to go to a subreddit or user page, respectively, or s to focus on the search box
-*/
-/***** To Fix:
-*    Establish a solid method of determining which comments are root comments
-*    
-*/
- 
-/***** To Do (potentially)
+
+# To Fix:
+  Establish a solid method of determining which comments are root comments
+
+
+# To Do (potentially)
 * Add commands for navigating comment trees. ($(".comment") grabs a div for each individual class. While rudimentary, this is a start for comment support)
 * Add support for more than 12 multireddits
-* restructure the code so its not so directly linear (functions, better structuring, etc)
-*/
+* Restructure the code so its not so directly linear (functions, better structuring, etc)
 
-/***** List of commands:
+
+# List of commands:
 * 0-9: The first time the number keys are pressed, it "selects" the chosen article, which enables further action:
 	* Pressing that number again will click on the article. Pressing a new number will select a new article
 	* PageUp/PageDown will up/down vote the article, respectively
@@ -70,10 +64,12 @@
 * l: if on the comments page for an article, pressing l will go to the link in the article
 * w: if on a comments page, select and scroll to the first root comment if none are selectd, or scroll to the root comment above the currently selected root comment
 * s: if on a comment page, select and scroll to the first root comment if none are selected, or scroll to the root comment below the currently selected root comment
-*/
 
 
-/***** Comment Trees
+
+# Comment Trees
+The simplest comment tree looks like the following:
+
 	Root Comment:
 	|
 	-	Child Comment:
@@ -85,6 +81,7 @@
 				...
 etc.
 However, this is not the only tree structure. For example:
+
 	Root Comment:
 	|
 	-	Child Comment 1:
@@ -97,4 +94,3 @@ However, this is not the only tree structure. For example:
 		...
 
 etc. This throws off what comment is selected, though it shows the proper parent comment. USE ID of the anchor to navigate properly!!
-*/
